@@ -1,3 +1,5 @@
+//引入第一屏的轮播
+import firstView from './firstView';
 export default function () {
 // 获取所要操作的元素
     const liNodes = document.querySelectorAll('.nav li');
@@ -31,6 +33,46 @@ export default function () {
     //代表li的下标
     let nowIndex = 0;
     let lastIndex=0;
+
+    bootAnimation();
+    //6.开场动画
+    function bootAnimation() {
+    //获取要操作的元素
+        const bootAnimationNode = document.querySelector('#boot-animation');
+        const lineNode = document.querySelector('#boot-animation .line');
+        const upNode = document.querySelector('#boot-animation .up');
+        const downNode = document.querySelector('#boot-animation .down');
+        //获取所有图片
+        const imgsArr = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','about1.jpg','about2.jpg','about3.jpg','about4.jpg','worksimg1.jpg','worksimg2.jpg','worksimg3.jpg','worksimg4.jpg','team.png','greenLine.png'];
+        const length = imgsArr.length;
+        let loadedImgNum = 0;
+        imgsArr.forEach( item =>{
+            //创建img对象
+            let img = new Image();
+            //img加载完成
+            img.onload=function () {
+                loadedImgNum++;
+                lineNode.style.width = loadedImgNum/length *100 +'%';
+                if (loadedImgNum === length){
+                    upNode.style.height='0';
+                    downNode.style.height = '0';
+                    lineNode.style.display = 'none';
+                    //移除遮罩层
+                    upNode.addEventListener('transitionend', function () {
+                        bootAnimationNode.remove();
+                        //入场动画
+                        animations[0].onIn();
+                        //开启自动轮播
+                        firstView();
+                    })
+                }
+            }
+            //为img加src属性
+            img.src=`./images/${item}`;
+        })
+    }
+
+
     //5.出入场动画
     const animations = [{
         onIn (){
