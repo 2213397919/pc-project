@@ -7,6 +7,22 @@ export default function () {
     const music = document.querySelector('.music');
     const audio = document.querySelector('.music audio');
     const contentNav = document.querySelectorAll('.content-nav li');
+    //获取出入场动画要操作的元素
+    //1
+    const homeCarousel = document.querySelector('.home-carousel');
+    //2
+    const plane1 = document.querySelector('.course-plane1');
+    const plane2 = document.querySelector('.course-plane2');
+    const plane3 = document.querySelector('.course-plane3');
+    //3
+    const pencil1 = document.querySelector('.works-pencil1');
+    const pencil2 = document.querySelector('.works-pencil2');
+    const pencil3 = document.querySelector('.works-pencil3');
+    //4
+    const aboutLists = document.querySelectorAll('.about-list');
+    //5
+    const teamTitle = document.querySelector('.team-title');
+    const teamText = document.querySelector('.team-text');
 
     //缓存content的高度，由于溢出隐藏，content的高度为一个li的高度。
     let sectionH = content.offsetHeight;
@@ -14,6 +30,70 @@ export default function () {
     const arrowHalfWidth = arrow.offsetWidth / 2;
     //代表li的下标
     let nowIndex = 0;
+    let lastIndex=0;
+    //5.出入场动画
+    const animations = [{
+        onIn (){
+            homeCarousel.style.transform = 'translateY(0)';
+            homeCarousel.style.opacity = '1';
+        },
+        onOut (){
+            homeCarousel.style.transform = 'translateY(-50%)';
+            homeCarousel.style.opacity = '0.2';
+        }
+    },{
+        onIn (){
+            plane1.style.transform = 'translate(0,0)';
+            plane2.style.transform = 'translate(0,0)';
+            plane3.style.transform = 'translate(0,0)';
+        },
+        onOut (){
+            plane1.style.transform = 'translate(-100px, -100px)';
+            plane2.style.transform = 'translate(-100px, 100px)';
+            plane3.style.transform = 'translate(100px, -100px)';
+        }
+    },{
+        onIn () {
+            pencil1.style.transform = 'translateY(0)';
+            pencil2.style.transform = 'translateY(0)';
+            pencil3.style.transform = 'translateY(0)';
+        },
+        onOut () {
+            //上 下 下
+            pencil1.style.transform = 'translateY(-50px)';
+            pencil2.style.transform = 'translateY(50px)';
+            pencil3.style.transform = 'translateY(50px)';
+        }
+    }, {
+        onIn (){
+            aboutLists[0].style.transform = 'rotate(0)';
+            aboutLists[1].style.transform = 'rotate(0)';
+        },
+        onOut (){
+            aboutLists[0].style.transform = 'rotate(45deg)';
+            aboutLists[1].style.transform = 'rotate(-45deg)';
+        }
+    },{
+        onIn (){
+            teamTitle.style.transform = 'translateX(0)';
+            teamText.style.transform = 'translateX(0)';
+        },
+        onOut (){
+            teamTitle.style.transform = 'translateX(100px)';
+            teamText.style.transform = 'translateX(-100px)';
+        }
+    }
+    ];
+    // 一上来所有屏都要做出场动画
+    for (let i = 0; i < animations.length; i++) {
+        animations[i].onOut();
+    }
+    //默认第一屏做入场动画
+    setTimeout(function () {
+        animations[0].onIn();
+    }, 2000)
+
+
     //ie/chrome
     document.onmousewheel = wheel;
     //firefox
@@ -73,6 +153,12 @@ export default function () {
         contentNav[nowIndex].className = 'active';
         arrow.style.left = liNodes[nowIndex].getBoundingClientRect().left + liNodes[nowIndex].offsetWidth / 2 - arrowHalfWidth+'px';
         ulNode.style.top = - nowIndex * sectionH + 'px';
+        //让上一屏做出场动画
+        animations[lastIndex].onOut();
+        //让当前屏做入场动画
+        animations[nowIndex].onIn();
+        //同步下标
+        lastIndex = nowIndex;
     }
     //1. 头部导航条事件
     for (let i = 0; i < liNodes.length; i++) {
