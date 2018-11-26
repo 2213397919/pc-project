@@ -58,8 +58,8 @@ export default function () {
             lastIndex = nowIndex;
         }, 3000);
     }
+    move(4);
     //开启自动轮播
-    move();
     //3.绑定移入移出事件
     home.onmouseenter = function () {
         //鼠标移入，清除轮播。

@@ -42,7 +42,7 @@ export default function () {
                }
            }
            switch (flag) {
-               //进行极值判断，判断滚轮的方向，进行屏数的切换。
+               //2.1进行极值判断，判断滚轮的方向，进行屏数的切换。
                case  'up':
                    if (nowIndex>0){
                        nowIndex--;
@@ -61,8 +61,7 @@ export default function () {
         event.preventDefault && event.preventDefault();
         return false;
     }
-    //2.1 滑动鼠标滚轮，小箭头的移动，导航样式的切换，屏数的切换。
-    move(3);
+    //1.1 滑动鼠标滚轮，小箭头的移动，导航样式的切换，屏数的切换。
     function move(nowIndex) {
         for (let j = 0; j < liNodes.length; j++) {
            liNodes[j].className='';
