@@ -20,7 +20,7 @@ export default function () {
             //将当前元素设为1
             this.style.opacity = 1;
             addCanvas(i);
-        }
+        };
     }
     //1.1 移出
     ulNode.onmouseleave = function () {
@@ -34,7 +34,7 @@ export default function () {
         //清除定时器
         clearInterval(createCircleTimer);
         clearInterval(bubbleTimer);
-    }
+    };
 
     //3 添加canvas
     function addCanvas(index) {
@@ -88,7 +88,7 @@ export default function () {
                 y,
                 rad,
                 s
-            })
+            });
         }, 40);
 
         //2.2 画圆
@@ -116,8 +116,8 @@ export default function () {
 
                     ctx.fill();
 
-                })
+                });
             }
-        }, 1000 / 60)
+        }, 1000 / 60);
     }
 }
